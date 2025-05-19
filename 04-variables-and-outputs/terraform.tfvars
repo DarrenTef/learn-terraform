@@ -1,0 +1,5 @@
+bucket_name = "tflearning-data"
+domain = "terraformlearing.com"
+db_name = "mydb"
+db_user = "foo"
+db_pass = "bar"
