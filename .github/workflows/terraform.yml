@@ -16,7 +16,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     defaults:
       run:
-        working-directory: 07-managing-multiple-environments/file-structure/staging
+        working-directory: 06-enviroment-management/file-structure/staging
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -74,7 +74,7 @@ jobs:
 
       - name: Terratest Execution
         if: github.event_name == 'pull_request'
-        working-directory: 08-testing/tests/terratest
+        working-directory: 07-testing/tests/terratest
         run: |
           go test . -v timeout 10m
 
@@ -88,7 +88,7 @@ jobs:
 
       - name: Terraform Apply Global
         if: github.event_name == 'push' || github.event_name == 'release'
-        working-directory: 07-managing-multiple-environments/file-structure/global
+        working-directory: 06-enviroment-management/file-structure/global
         run: |
           terraform init
           terraform apply -auto-approve
@@ -99,7 +99,7 @@ jobs:
 
       - name: Terraform Apply Production
         if: steps.check-tag.outputs.environment == 'production' && github.event_name == 'release'
-        working-directory: 07-managing-multiple-environments/file-structure/production
+        working-directory: 06-enviroment-management/file-structure/production
         run: |
           terraform init
           terraform apply -var db_pass=${{secrets.DB_PASS }} -auto-approve
